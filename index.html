@@ -3,209 +3,160 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>中国医疗出口 Opportunity Matrix</title>
+<title>中国医疗出口 Opportunity Map</title>
 <style>
-:root{
-  --bg:#f6f7f9; --card:#fff; --text:#18202a; --muted:#677384; --line:#dfe4ea;
-  --accent:#2459ff; --good:#11845b; --warn:#b66a00; --bad:#b23a48;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text)}
-.wrap{max-width:1500px;margin:0 auto;padding:24px}
-.hero{background:linear-gradient(135deg,#111827,#243b6b);color:white;border-radius:22px;padding:28px 30px;box-shadow:0 14px 40px rgba(20,35,70,.18)}
-.hero h1{margin:0 0 8px;font-size:31px}.hero p{margin:7px 0;color:#dce5ff;max-width:1050px;line-height:1.6}
-.badge{display:inline-block;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.12);font-size:12px;margin-right:6px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:16px 0}
-.kpi,.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 5px 20px rgba(25,38,65,.05)}
-.kpi .v{font-size:28px;font-weight:750;margin-top:6px}.small{font-size:12px;color:var(--muted)}
-.controls{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
-input,select,button{border:1px solid var(--line);border-radius:10px;background:white;padding:10px 12px;font-size:14px}
-button{cursor:pointer} button:hover{border-color:#9eb0d3}
-.panel{background:white;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:16px 0}
-.panel h2{font-size:18px;margin:0;padding:16px 18px;border-bottom:1px solid var(--line)}
-.table-wrap{overflow:auto}
-table{border-collapse:collapse;width:100%;min-width:1260px;font-size:13px}
-th,td{padding:11px 12px;border-bottom:1px solid #edf0f3;vertical-align:top}
-th{position:sticky;top:0;background:#f9fafb;text-align:left;color:#4b5563;cursor:pointer;white-space:nowrap}
-tr:hover{background:#fbfcff}.name{font-weight:700}.pill{display:inline-block;padding:3px 7px;border-radius:999px;font-size:11px;background:#eef2ff;color:#3447a8}
-.score{font-weight:800}.conf-high{color:var(--good)}.conf-mid{color:var(--warn)}.conf-low{color:var(--bad)}
-.details{display:none;background:#f9fbff}.details td{padding:14px 20px}.details.show{display:table-row}
-a{color:#2459ff;text-decoration:none}a:hover{text-decoration:underline}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-canvas{width:100%;height:390px;background:#fff}
-.legend{font-size:12px;color:var(--muted);line-height:1.55}
-.feature{border-left:4px solid var(--accent)}.feature h3{margin:0 0 8px}.feature p{margin:6px 0;line-height:1.55}
-.footer{font-size:12px;color:#667085;line-height:1.7;padding:10px 2px 30px}
-@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}.wrap{padding:12px}.hero{padding:20px}.hero h1{font-size:24px}}
+:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#667085;--line:#e5e9f0;--accent:#275efe;--soft:#eef3ff;--dark:#111827}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+button,a{font:inherit}a{color:var(--accent);text-decoration:none}
+.wrap{max-width:1280px;margin:auto;padding:20px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.brand{font-weight:800;font-size:18px}.homebtn{border:1px solid var(--line);background:white;border-radius:10px;padding:9px 12px;cursor:pointer}
+.hero{background:linear-gradient(135deg,#111827,#294574);color:#fff;border-radius:22px;padding:28px;margin-bottom:16px}
+.hero h1{margin:0 0 8px;font-size:30px}.hero p{color:#dbe6ff;line-height:1.6;max-width:1000px}
+.badge{display:inline-block;background:#ffffff18;border-radius:999px;padding:5px 10px;font-size:12px;margin-right:5px}
+.screen{display:none}.screen.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card,.panel{background:white;border:1px solid var(--line);border-radius:16px;box-shadow:0 4px 18px #21345a0b}
+.card{padding:17px;cursor:pointer;transition:.15s}.card:hover{transform:translateY(-2px);border-color:#b9c7f7}
+.card .icon{font-size:30px}.card h3{margin:8px 0 6px}.card p{color:var(--muted);line-height:1.5}
+.pill{display:inline-block;padding:4px 8px;background:var(--soft);color:#3946a2;border-radius:999px;font-size:11px}
+.panel{margin:16px 0;overflow:hidden}.panel h2{margin:0;padding:15px 18px;border-bottom:1px solid var(--line);font-size:18px}
+.content{padding:17px 18px;line-height:1.65}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.kpi{background:white;border:1px solid var(--line);border-radius:14px;padding:14px}
+.kpi .v{font-size:23px;font-weight:800;margin-top:5px}.small{font-size:12px;color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:10px 11px;border-bottom:1px solid #edf0f4;vertical-align:top;text-align:left}th{background:#fafbfc;white-space:nowrap}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.callout{padding:13px 15px;border-radius:12px;background:#fff7e8;margin:10px 0}.blue{background:#f3f6ff}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.tabbtn{border:1px solid var(--line);background:white;border-radius:999px;padding:8px 11px;cursor:pointer}.tabbtn.active{background:var(--dark);color:white}
+.back{display:inline-flex;align-items:center;gap:6px;border:none;background:none;color:var(--accent);cursor:pointer;padding:0;margin-bottom:12px}
+.compare-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.compare-box{background:white;border:1px solid var(--line);border-radius:14px;padding:14px}
+.footer{font-size:12px;color:var(--muted);line-height:1.65;padding:18px 0 30px}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.kpis,.compare-grid{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+@media(max-width:620px){.grid{grid-template-columns:1fr}.hero h1{font-size:24px}.wrap{padding:12px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<section class="hero">
-  <span class="badge">Prototype v0.3 · Commercialization Gaps</span><span class="badge">数据日期：2026-09</span>
-  <h1>中国医疗出口 Opportunity Matrix</h1>
-  <p>用于筛选“海外患者来华医疗 / 中国医疗服务与技术出海”的候选方向。核心看：价格差、标准化、疗程、随访、监管与获客难度。价格均为研究区间，不是报价；不同国家、医院、医生、术式与保险条件会显著改变实际价格。</p>
+<div class="topbar"><div class="brand">China Medical Export Opportunity Map</div><button class="homebtn" onclick="go('home')">首页</button></div>
+
+<section id="home" class="screen active">
+<div class="hero"><span class="badge">Single-page V1</span><span class="badge">Prototype</span><h1>中国医疗出口 Opportunity Map</h1><p>一个链接、一个页面。首页负责入口；点项目进入详细分析；也可直接进入价格比较、竞争地图和商业化缺口。</p></div>
+<div class="grid">
+<div class="card" onclick="go('pricing')"><div class="icon">💰</div><h3>价格比较</h3><p>Home market → 竞争目的地 → 上海 → All-in 成本。</p></div>
+<div class="card" onclick="go('competition')"><div class="icon">🌍</div><h3>竞争地图</h3><p>海外目的地、平台、医院与中国国内玩家。</p></div>
+<div class="card" onclick="go('commercial')"><div class="icon">🧩</div><h3>商业化缺口</h3><p>临床强，不代表国际品牌、获客和随访已经成熟。</p></div>
+</div>
+<div class="panel"><h2>重点项目</h2><div class="content"><div class="grid" id="projectCards"></div></div></div>
 </section>
 
-<div class="grid">
-  <div class="kpi"><div class="small">候选领域</div><div class="v" id="kpiCount"></div></div>
-  <div class="kpi"><div class="small">中位价格差 ≥ 2×</div><div class="v" id="kpiGap"></div></div>
-  <div class="kpi"><div class="small">旅行适配度 ≥ 4/5</div><div class="v" id="kpiTravel"></div></div>
-  <div class="kpi"><div class="small">高/中高置信度价格数据</div><div class="v" id="kpiConf"></div></div>
-</div>
+<section id="detail" class="screen">
+<button class="back" onclick="go('home')">← 返回首页</button>
+<div id="detailContent"></div>
+</section>
 
-<div class="two">
-  <div class="card feature">
-    <h3>牙科：最像“标准化医疗出口产品”</h3>
-    <p><b>优势：</b>海外自费价格高、中国供应链成本低、临床技术成熟、结果可理解。</p>
-    <p><b>真正瓶颈：</b>两阶段治疗与长期随访。因此商业护城河很可能是“上海治疗中心 + 海外合作牙医 + 英文病历/影像可携带”。</p>
-  </div>
-  <div class="card feature">
-    <h3>TMS：不应只按“医疗旅游”理解</h3>
-    <p><b>限制：</b>传统rTMS疗程通常较长；TMS主要是治疗工具，而不是单独诊断精神疾病的机器。</p>
-    <p><b>更大的路线：</b>合规设备 + protocol + 医生培训 + 海外中心。若未来有成熟、获批的加速疗程，患者来华的适配度才会明显提高。</p>
-  </div>
-</div>
+<section id="pricing" class="screen">
+<button class="back" onclick="go('home')">← 返回首页</button>
+<div class="hero"><span class="badge">Pricing</span><h1>价格比较</h1><p>当前先建立结构，不把不同国家和不同套餐硬压成一个数字。下一轮价格研究将逐领域补全真实竞争目的地价格与 All-in Patient Cost。</p></div>
+<div class="panel"><h2>四层价格框架</h2><div class="content"><div class="compare-grid">
+<div class="compare-box"><b>1. Home Market</b><p class="small">美国、英国、澳洲、日本等患者本地自费价格</p></div>
+<div class="compare-box"><b>2. Competitor Destination</b><p class="small">韩国、土耳其、泰国、印度、墨西哥等真实竞争目的地</p></div>
+<div class="compare-box"><b>3. Shanghai</b><p class="small">上海国际患者真实报价，而不是普通国内门诊价</p></div>
+<div class="compare-box"><b>4. All-in Cost</b><p class="small">医疗费 + 机票 + 酒店 + 停留 + 二次来访概率</p></div>
+</div></div></div>
+<div id="pricingTable" class="panel"></div>
+</section>
 
-<div class="controls">
-  <input id="search" placeholder="搜索：牙科 / TMS / MRI...">
-  <select id="cluster"><option value="">全部模式</option><option>医疗旅游</option><option>医疗旅游 + 技术出海</option><option>医疗旅游 / 远程延伸</option><option>医疗旅游 / 服务出海</option><option>远程医疗服务出口</option></select>
-  <select id="confidence"><option value="">全部置信度</option><option>高</option><option>中高</option><option>中</option><option>中低</option><option>低</option></select>
-  <button id="reset">重置</button>
-</div>
+<section id="competition" class="screen">
+<button class="back" onclick="go('home')">← 返回首页</button>
+<div class="hero"><span class="badge">Competition</span><h1>竞争地图</h1><p>把“国家/城市目的地、医院/诊所、获客平台、技术平台、中国国内玩家”分开看。</p></div>
+<div id="competitionContent"></div>
+</section>
 
-<div class="panel">
-<h2>可排序矩阵（点击列名排序；点击项目行展开证据与备注）</h2>
-<div class="table-wrap">
-<table id="matrix">
-<thead><tr>
-<th data-k="name">项目</th><th data-k="cluster">模式</th><th data-k="overseas_low">海外价格基准</th><th data-k="china_rmb_low">中国参考价</th>
-<th data-k="gap_mid">中位价格差</th><th data-k="stay">疗程/停留</th><th data-k="standardization">标准化</th><th data-k="travel_fit">旅行适配</th>
-<th data-k="followup">随访难度</th><th data-k="regulatory">监管/责任</th><th data-k="acquisition">获客难度</th><th data-k="confidence">价格置信度</th>
-</tr></thead><tbody></tbody>
-</table>
-</div>
-</div>
+<section id="commercial" class="screen">
+<button class="back" onclick="go('home')">← 返回首页</button>
+<div class="hero"><span class="badge">Commercialization</span><h1>国际商业化缺口</h1><p>重点寻找：国内供给已经很强，但国际品牌、获客、套餐化、跨境随访或技术出海基础设施仍明显不足的领域。</p></div>
+<div id="commercialContent" class="panel"></div>
+</section>
 
-<div class="two">
-  <div class="panel"><h2>价格差倍数（中位数估算）</h2><div style="padding:12px"><canvas id="bar"></canvas><div class="legend">价格差 = 海外参考区间中点 ÷ 中国参考区间中点（中国价格按¥7.1/USD仅用于显示换算）。它不是利润率，也没有计入机票、酒店、渠道、保险、翻译与售后成本。</div></div></div>
-  <div class="panel"><h2>机会结构图：价格差 × 标准化</h2><div style="padding:12px"><canvas id="scatter"></canvas><div class="legend">横轴：价格差；纵轴：标准化程度。圆越大代表客单价/复杂度越高。此图用于发现“值得进一步核验”的区域，不是投资评级。</div></div></div>
-</div>
-
-
-
-<div class="panel" id="commercialization">
-<h2>商业化缺口矩阵：临床供给强，不等于国际生意已经成熟</h2>
-<div style="padding:14px 18px;color:#677384;line-height:1.6">
-这里不做“总分排名”，而是把每个领域拆成国际商业化所需的几个关键组件。重点寻找的是：<b>国内供给已经强，但国际品牌、获客、套餐化或跨境随访仍明显不足</b>的领域。
-</div>
-<div class="table-wrap">
-<table style="min-width:1250px">
-<thead><tr>
-<th>领域</th><th>国内临床供给</th><th>国际品牌认知</th><th>国际获客渠道</th><th>跨境随访/售后</th><th>套餐化程度</th><th>技术/设备出海潜力</th><th>当前结构</th><th>解释</th>
-</tr></thead>
-<tbody><tr><td><b>单颗种植牙</b></td><td>强</td><td>弱</td><td>弱</td><td>弱</td><td>中</td><td>中</td><td><span class='pill'>强供给 / 弱国际商业化</span></td><td>临床与供应链优势明显，但国际患者品牌、跨境质保与海外合作牙医网络仍不成熟。</td></tr><tr><td><b>全口/半口种植重建</b></td><td>强</td><td>弱</td><td>弱</td><td>弱</td><td>中</td><td>中</td><td><span class='pill'>强供给 / 弱国际商业化</span></td><td>高客单价且技术成熟，但多阶段治疗使海外复诊和长期维护成为决定性短板。</td></tr><tr><td><b>LASIK / SMILE</b></td><td>强</td><td>中</td><td>中</td><td>中</td><td>中</td><td>强</td><td><span class='pill'>供给强 / 国际化部分形成</span></td><td>爱尔、德视佳等已有国际化基础，主要缺口是把上海做成主动获客的医疗旅游目的地。</td></tr><tr><td><b>白内障 / 高端人工晶体</b></td><td>强</td><td>中</td><td>中</td><td>中</td><td>中</td><td>强</td><td><span class='pill'>供给强 / 国际化部分形成</span></td><td>临床与产业链成熟，但国际老年患者更依赖术后连续照护、保险与并发症处理。</td></tr><tr><td><b>全身MRI + 高端体检</b></td><td>强</td><td>弱</td><td>弱</td><td>中</td><td>中</td><td>强</td><td><span class='pill'>强供给 / 产品化不足</span></td><td>设备与医生都强，但缺少像 Prenuvo 那样简单清晰、全球可理解的一体化产品。</td></tr><tr><td><b>面部整形 / Facelift</b></td><td>强</td><td>中</td><td>中</td><td>中</td><td>中</td><td>中</td><td><span class='pill'>供给强 / 海外生态弱</span></td><td>国内消费医疗运营成熟，但国际内容营销、海外口碑、跨境客服与售后网络弱于韩国。</td></tr><tr><td><b>TMS / rTMS 神经调控</b></td><td>中强</td><td>弱</td><td>弱</td><td>弱</td><td>弱</td><td>强</td><td><span class='pill'>技术潜力强 / 国际商业化早期</span></td><td>中国已有设备厂商和临床节点，但国际监管证据、标准 protocol、海外医生网络和品牌仍是关键缺口。</td></tr><tr><td><b>全髋关节置换</b></td><td>强</td><td>弱</td><td>弱</td><td>弱</td><td>弱</td><td>中</td><td><span class='pill'>强供给 / 跨境服务链弱</span></td><td>手术能力强，但国际患者真正需要的是术前评估、康复、并发症责任与长期复诊闭环。</td></tr><tr><td><b>睡眠医学 / PSG + 专科评估</b></td><td>强</td><td>弱</td><td>弱</td><td>中</td><td>弱</td><td>中</td><td><span class='pill'>强供给 / 独立产品性弱</span></td><td>适合作为体检、神经精神或心肺项目的模块，不容易单独形成强医疗旅游品牌。</td></tr><tr><td><b>肿瘤二诊 + 精准检查</b></td><td>强</td><td>中</td><td>弱</td><td>弱</td><td>弱</td><td>强</td><td><span class='pill'>顶级供给 / 国际入口不足</span></td><td>临床与先进治疗具优势，但海外患者获取、病例预审、快速二诊和回国后的连续照护仍不够产品化。</td></tr><tr><td><b>康复 / 术后强化康复</b></td><td>中强</td><td>弱</td><td>弱</td><td>中</td><td>弱</td><td>中强</td><td><span class='pill'>服务能力强 / 跨境模式待验证</span></td><td>长期来华居住成本高，更适合做短期强化康复、远程管理与海外合作中心。</td></tr><tr><td><b>国际专科会诊 / 第二诊疗意见</b></td><td>强</td><td>中</td><td>弱</td><td>中</td><td>中</td><td>强</td><td><span class='pill'>适合做入口层</span></td><td>中国专家供给强，但缺少全球化、低摩擦的病历上传、支付、匹配和转诊漏斗。</td></tr></tbody>
-</table>
-</div>
-</div>
-
-<div class="panel" id="competition">
-<h2>竞争版图总览：海外玩家 × 中国国内玩家</h2>
-<div class="table-wrap">
-<table style="min-width:1100px">
-<thead><tr><th>领域</th><th>海外代表性竞争者/目的地</th><th>中国国内代表性玩家</th><th>上海需要补的关键能力</th></tr></thead>
-<tbody><tr><td><b>单颗种植牙</b></td><td>Dental Centre Turkey（土耳其）；Dental Departures 等（跨境平台）</td><td>上海九院（上海）；和睦家等国际私立牙科（北京/上海等）</td><td>中国临床供给并不弱，短板更像是海外获客、透明套餐、跨境质保和海外合作牙医网络。</td></tr><tr><td><b>全口/半口种植重建</b></td><td>Dental Centre Turkey（土耳其）；匈牙利 / 墨西哥 / 泰国牙科集群（多国）</td><td>上海九院（上海）；国内大型连锁口腔机构（全国）</td><td>全口重建最关键的是多阶段治疗后的海外维护；若没有当地合作牙医，纯价格优势很难形成长期信任。</td></tr><tr><td><b>LASIK / SMILE</b></td><td>韩国大型屈光中心（韩国）；泰国国际眼科中心（泰国）</td><td>EuroEyes 德视佳（上海/全国）；爱尔眼科（全国/全球）</td><td>中国已有真正全球化眼科玩家，因此竞争不是‘能不能做’，而是医疗旅游获客、套餐和跨境复诊能否继续产品化。</td></tr><tr><td><b>白内障 / 高端人工晶体</b></td><td>Bumrungrad Eye Center（泰国）；Apollo 等大型医院（印度）</td><td>EuroEyes 德视佳（上海/全国）；爱尔眼科（全国/全球）</td><td>供给侧成熟，但老年国际患者更看重术后复诊、并发症处理和保险衔接。</td></tr><tr><td><b>全身MRI + 高端体检</b></td><td>Prenuvo（美国/加拿大等）；Bumrungrad / 日本体检中心（泰国/日本）</td><td>嘉会医疗 Jiahui（上海）；上海国际医学中心等（上海）</td><td>中国并不缺设备和医院，突破口可能是‘1–2天完成 + 次日英文报告 + 异常结果直接转专科’。</td></tr><tr><td><b>面部整形 / Facelift</b></td><td>韩国整形医院群（韩国）；土耳其整形机构（土耳其）</td><td>上海九院（上海）；大型民营医美机构（上海/全国）</td><td>韩国的优势是整个国际消费医疗生态，不只是医生。上海若进入，需要名医IP、国际客服、内容营销和术后保障一起做。</td></tr><tr><td><b>TMS / rTMS 神经调控</b></td><td>BrainsWay（全球）；NeuroStar（美国）</td><td>深圳英智科技 YINGCHI（深圳）；上海市精神卫生中心 / 北大六院 / 北京安定 / 华山等（中国主要城市）</td><td>中国已经有设备与临床节点。真正差距可能在国际监管证据、标准protocol、患者筛选、海外医生网络和跨境随访。</td></tr><tr><td><b>全髋关节置换</b></td><td>Apollo Hospitals（印度）；Bumrungrad（泰国）</td><td>上海六院（上海）；嘉会医疗 / 和睦家（上海）</td><td>技术不是唯一决胜点；跨境康复、并发症责任、海外复诊与长周期住宿决定商业可行性。</td></tr><tr><td><b>睡眠医学 / PSG + 专科评估</b></td><td>Bumrungrad / 新加坡综合医院睡眠中心（泰国/新加坡）；美国专科睡眠中心（美国）</td><td>华山 / 瑞金等大型医院（上海）；申德等高端私立机构（上海）</td><td>更适合作为高端体检、神经精神或心肺评估的一部分，而不是独立医疗旅游目的。</td></tr><tr><td><b>肿瘤二诊 + 精准检查</b></td><td>Apollo Cancer Centres / Apollo Proton（印度）；新加坡大型肿瘤中心（新加坡）</td><td>上海质子重离子中心（上海）；和睦家 / 嘉会国际癌症中心 / Concord等（上海）</td><td>这里很难靠‘便宜’获客，核心是二诊速度、专家/病例量、病理影像复核、先进治疗可及性，以及回国后的continuity of care。</td></tr><tr><td><b>康复 / 术后强化康复</b></td><td>欧洲高端康复机构（德国/瑞士）；Apollo / 泰国国际医院（印度/泰国）</td><td>嘉会医疗 / 和睦家（上海）；上海六院及大型康复机构（上海）</td><td>患者长住上海的成本会吃掉部分价格优势，因此更值得研究‘短期强化康复+远程管理+海外合作康复中心’。</td></tr><tr><td><b>国际专科会诊 / 第二诊疗意见</b></td><td>Mayo Clinic / Cleveland Clinic等（美国）；Apollo International Patient Services（印度）</td><td>和睦家 / 嘉会 / SIMC（上海）；上海顶级公立医院国际部（上海）</td><td>二诊可能不是高收入业务，但可以成为医疗出口漏斗入口：先筛选，再把真正高价值病例转化为来沪治疗。</td></tr></tbody>
-</table>
-</div>
-</div>
-
-<div class="panel">
-<h2>如何读这个 Matrix</h2>
-<div style="padding:18px;line-height:1.7">
-<b>最容易形成医疗旅游产品的结构：</b>高价格差 + 高标准化 + 短疗程 + 低随访难度。<br>
-<b>不能只看价格差：</b>肿瘤、精神/神经、关节置换等项目，即使价格差明显，也可能因为长期疗程、责任边界、跨境复诊而失去经济性。<br>
-<b>第二条增长曲线：</b>对TMS、康复、远程二诊等领域，应同步研究“设备 / protocol / 软件 / 医生培训 / 海外合作中心”的服务出口模式。
-</div>
-</div>
-
-<div class="footer">
-<b>数据说明：</b>海外价格主要使用美国自费或公开机构价格作为“高价市场基准”，并不代表全球统一价格。中国价格优先引用政府公开价、上海医院/市场公开价；找不到统一官方价格的领域使用研究性区间并标记较低置信度。国际医疗部价格通常高于本地公立普通门诊。所有价格都必须在进入商业计划前逐机构重新核验。<br>
-<b>注意：</b>本页面不是医疗建议，也不评价具体治疗是否适合个人。TMS、肿瘤治疗、整形、骨科等必须由有资质机构依据适应证、获批设备和临床规范实施。
-</div>
+<div class="footer">Prototype · 2026-09。市场研究用途，不构成医疗建议或投资结论。价格和竞争数据进入商业计划前需逐机构重新核验。</div>
 </div>
 
 <script>
-const COMMERCIAL = {"单颗种植牙": {"supply": "强", "brand": "弱", "acq": "弱", "follow": "弱", "pack": "中", "tech": "中", "pattern": "强供给 / 弱国际商业化", "why": "临床与供应链优势明显，但国际患者品牌、跨境质保与海外合作牙医网络仍不成熟。"}, "全口/半口种植重建": {"supply": "强", "brand": "弱", "acq": "弱", "follow": "弱", "pack": "中", "tech": "中", "pattern": "强供给 / 弱国际商业化", "why": "高客单价且技术成熟，但多阶段治疗使海外复诊和长期维护成为决定性短板。"}, "LASIK / SMILE": {"supply": "强", "brand": "中", "acq": "中", "follow": "中", "pack": "中", "tech": "强", "pattern": "供给强 / 国际化部分形成", "why": "爱尔、德视佳等已有国际化基础，主要缺口是把上海做成主动获客的医疗旅游目的地。"}, "白内障 / 高端人工晶体": {"supply": "强", "brand": "中", "acq": "中", "follow": "中", "pack": "中", "tech": "强", "pattern": "供给强 / 国际化部分形成", "why": "临床与产业链成熟，但国际老年患者更依赖术后连续照护、保险与并发症处理。"}, "全身MRI + 高端体检": {"supply": "强", "brand": "弱", "acq": "弱", "follow": "中", "pack": "中", "tech": "强", "pattern": "强供给 / 产品化不足", "why": "设备与医生都强，但缺少像 Prenuvo 那样简单清晰、全球可理解的一体化产品。"}, "面部整形 / Facelift": {"supply": "强", "brand": "中", "acq": "中", "follow": "中", "pack": "中", "tech": "中", "pattern": "供给强 / 海外生态弱", "why": "国内消费医疗运营成熟，但国际内容营销、海外口碑、跨境客服与售后网络弱于韩国。"}, "TMS / rTMS 神经调控": {"supply": "中强", "brand": "弱", "acq": "弱", "follow": "弱", "pack": "弱", "tech": "强", "pattern": "技术潜力强 / 国际商业化早期", "why": "中国已有设备厂商和临床节点，但国际监管证据、标准 protocol、海外医生网络和品牌仍是关键缺口。"}, "全髋关节置换": {"supply": "强", "brand": "弱", "acq": "弱", "follow": "弱", "pack": "弱", "tech": "中", "pattern": "强供给 / 跨境服务链弱", "why": "手术能力强，但国际患者真正需要的是术前评估、康复、并发症责任与长期复诊闭环。"}, "睡眠医学 / PSG + 专科评估": {"supply": "强", "brand": "弱", "acq": "弱", "follow": "中", "pack": "弱", "tech": "中", "pattern": "强供给 / 独立产品性弱", "why": "适合作为体检、神经精神或心肺项目的模块，不容易单独形成强医疗旅游品牌。"}, "肿瘤二诊 + 精准检查": {"supply": "强", "brand": "中", "acq": "弱", "follow": "弱", "pack": "弱", "tech": "强", "pattern": "顶级供给 / 国际入口不足", "why": "临床与先进治疗具优势，但海外患者获取、病例预审、快速二诊和回国后的连续照护仍不够产品化。"}, "康复 / 术后强化康复": {"supply": "中强", "brand": "弱", "acq": "弱", "follow": "中", "pack": "弱", "tech": "中强", "pattern": "服务能力强 / 跨境模式待验证", "why": "长期来华居住成本高，更适合做短期强化康复、远程管理与海外合作中心。"}, "国际专科会诊 / 第二诊疗意见": {"supply": "强", "brand": "中", "acq": "弱", "follow": "中", "pack": "中", "tech": "强", "pattern": "适合做入口层", "why": "中国专家供给强，但缺少全球化、低摩擦的病历上传、支付、匹配和转诊漏斗。"}};
-const COMPETITORS = {"单颗种植牙": {"global": [["Dental Centre Turkey", "土耳其", "国际患者型牙科中心：植牙/修复套餐、短期停留、英文获客、评价体系", "https://dentalcentreturkey.com/treatment/dental-implants-in-turkey"], ["Dental Departures 等", "跨境平台", "诊所发现、价格比较、预约与国际患者导流", "https://www.dentaldepartures.com/"]], "china": [["上海九院", "上海", "三级甲等；口腔医学强项，并已进入上海国际医疗服务体系", "https://english.shanghai.gov.cn/en-IntlMedicalServices/"], ["和睦家等国际私立牙科", "北京/上海等", "外语服务、国际保险与国际患者体验较成熟", "https://shanghai.ufh.com.cn/"]], "gap": "中国临床供给并不弱，短板更像是海外获客、透明套餐、跨境质保和海外合作牙医网络。"}, "全口/半口种植重建": {"global": [["Dental Centre Turkey", "土耳其", "All-on-4/全口修复等高客单价套餐化，面向英国/欧洲患者", "https://dentalcentreturkey.com/about-us-dentist-turkey"], ["匈牙利 / 墨西哥 / 泰国牙科集群", "多国", "长期经营跨境牙科旅游，常提供住宿、接送、翻译与复诊安排", "https://www.dentaldepartures.com/"]], "china": [["上海九院", "上海", "复杂口腔、颌面及修复能力强，具备国际医疗入口", "https://english.shanghai.gov.cn/en-IntlMedicalServices/"], ["国内大型连锁口腔机构", "全国", "国内自费市场已有套餐化能力，但国际患者品牌较弱", "https://www.arrailgroup.com/"]], "gap": "全口重建最关键的是多阶段治疗后的海外维护；若没有当地合作牙医，纯价格优势很难形成长期信任。"}, "LASIK / SMILE": {"global": [["韩国大型屈光中心", "韩国", "短疗程、国际获客、术前筛查与术后复查高度流程化", "https://www.visitmedicalkorea.com/"], ["泰国国际眼科中心", "泰国", "医疗旅游套餐、翻译、酒店与短期手术组合成熟", "https://www.bumrungrad.com/en/centers/eye-center-bangkok-thailand"]], "china": [["EuroEyes 德视佳", "上海/全国", "欧洲连锁眼科体系；上海金茂等多地布局，国际化品牌明显", "https://www.euroeyes.cn/en/"], ["爱尔眼科", "全国/全球", "800+中国内地机构，并有欧洲、东南亚、香港等海外网络", "https://www.aierchina.com/"]], "gap": "中国已有真正全球化眼科玩家，因此竞争不是‘能不能做’，而是医疗旅游获客、套餐和跨境复诊能否继续产品化。"}, "白内障 / 高端人工晶体": {"global": [["Bumrungrad Eye Center", "泰国", "国际患者服务成熟，眼科手术与旅行支持结合", "https://www.bumrungrad.com/en/centers/eye-center-bangkok-thailand"], ["Apollo 等大型医院", "印度", "高病例量、英语服务、价格优势及国际患者部门", "https://www.apollohospitals.com/"]], "china": [["EuroEyes 德视佳", "上海/全国", "晶体置换、老视与白内障等高端眼科服务", "https://www.euroeyes.cn/en/"], ["爱尔眼科", "全国/全球", "白内障是核心亚专科之一，且具跨国医疗网络", "https://www.aierchina.com/"]], "gap": "供给侧成熟，但老年国际患者更看重术后复诊、并发症处理和保险衔接。"}, "全身MRI + 高端体检": {"global": [["Prenuvo", "美国/加拿大等", "把全身MRI包装成直接面向消费者的高端筛查产品", "https://www.prenuvo.com/what-we-offer"], ["Bumrungrad / 日本体检中心", "泰国/日本", "一日式体检、多语种服务、企业客户与国际保险体系成熟", "https://www.bumrungrad.com/jp/international-patient-center"]], "china": [["嘉会医疗 Jiahui", "上海", "国际化综合医院，适合作为体检+专科转诊的一体化入口", "https://www.jiahui.com/"], ["上海国际医学中心等", "上海", "高端体检、专科、多语言及国际患者服务体系", "https://english.shanghai.gov.cn/en-IntlMedicalServices/"], ["MedBridge Shanghai 等中介", "上海", "已经在对外销售‘1天体检+翻译+医院协调’产品", "https://www.mjktrip.com/en/services/health-checkup"]], "gap": "中国并不缺设备和医院，突破口可能是‘1–2天完成 + 次日英文报告 + 异常结果直接转专科’。"}, "面部整形 / Facelift": {"global": [["韩国整形医院群", "韩国", "医美品牌、内容营销、国际客服与网红获客生态成熟", "https://www.visitmedicalkorea.com/"], ["土耳其整形机构", "土耳其", "全包套餐、机场接送、酒店和低价定位成熟", "https://www.healthturkiye.com/"]], "china": [["上海九院", "上海", "整复外科是代表性强项，且进入上海国际医疗服务体系", "https://english.shanghai.gov.cn/en-IntlMedicalServices/"], ["大型民营医美机构", "上海/全国", "国内获客与消费医疗运营成熟，但国际患者品牌和海外渠道相对弱", "https://www.meituan.com/"]], "gap": "韩国的优势是整个国际消费医疗生态，不只是医生。上海若进入，需要名医IP、国际客服、内容营销和术后保障一起做。"}, "TMS / rTMS 神经调控": {"global": [["BrainsWay", "全球", "Deep TMS设备、FDA获批适应证、全球provider网络；SWIFT把急性期压缩到6天", "https://www.brainsway.com/treatments/major-depressive-disorder/"], ["NeuroStar", "美国", "设备+医生网络+患者获客平台，直接提供provider搜索与预约", "https://neurostar.com/landing/betterme/"]], "china": [["深圳英智科技 YINGCHI", "深圳", "TMS设备厂商；BrainsWay在中国的本地代表/合作方，并建设海外经销网络", "https://www.yingchi-tms.com/about-us/"], ["上海市精神卫生中心 / 北大六院 / 北京安定 / 华山等", "中国主要城市", "已参与深部TMS临床交流与应用网络，但面向国际患者的产品化程度仍有限", "https://www.yingchitech.com/cn/news-3/211.html"]], "gap": "中国已经有设备与临床节点。真正差距可能在国际监管证据、标准protocol、患者筛选、海外医生网络和跨境随访。"}, "全髋关节置换": {"global": [["Apollo Hospitals", "印度", "大量骨科手术、国际患者预审、报价、签证、接送和术后支持", "https://www.apollohospitals.com/international-patient-services/specialities/orthopedics"], ["Bumrungrad", "泰国", "成熟国际患者中心、多语种协调与回国后持续治疗支持", "https://www.bumrungrad.com/jp/international-patient-center"]], "china": [["上海六院", "上海", "骨科与创伤是代表性强项，并纳入上海国际医疗服务体系", "https://english.shanghai.gov.cn/en-IntlMedicalServices/"], ["嘉会医疗 / 和睦家", "上海", "国际患者体验、英语服务和术后康复衔接较成熟", "https://www.jiahui.com/"]], "gap": "技术不是唯一决胜点；跨境康复、并发症责任、海外复诊与长周期住宿决定商业可行性。"}, "睡眠医学 / PSG + 专科评估": {"global": [["Bumrungrad / 新加坡综合医院睡眠中心", "泰国/新加坡", "睡眠、呼吸、ENT、神经和心血管整合，适合国际患者", "https://www.bumrungrad.com/"], ["美国专科睡眠中心", "美国", "PSG、远程随访与CPAP管理体系成熟", "https://sleepeducation.org/"]], "china": [["华山 / 瑞金等大型医院", "上海", "神经、呼吸等专科基础强，具国际医疗接口", "https://english.shanghai.gov.cn/en-IntlMedicalServices/"], ["申德等高端私立机构", "上海", "已有睡眠障碍诊疗和高端体检结合的市场化服务", "https://www.mjktrip.com/en/services/health-checkup"]], "gap": "更适合作为高端体检、神经精神或心肺评估的一部分，而不是独立医疗旅游目的。"}, "肿瘤二诊 + 精准检查": {"global": [["Apollo Cancer Centres / Apollo Proton", "印度", "国际患者端到端服务：病历、签证、住宿、机场、翻译、视频随访", "https://www.apollohospitals.com/proton-therapy/international-patient-service/"], ["新加坡大型肿瘤中心", "新加坡", "英文医疗、国际保险、区域转诊与高端患者市场成熟", "https://www.nccs.com.sg/"]], "china": [["上海质子重离子中心", "上海", "中国质子/重离子代表性中心，治疗量大，具国际肿瘤中心定位", "https://www.protonchina.org/en/china-proton-centers/shanghaiprotonandheavyloncenter"], ["和睦家 / 嘉会国际癌症中心 / Concord等", "上海", "国际患者服务、影像、肿瘤专科和商业保险接口更成熟", "https://english.shanghai.gov.cn/en-IntlMedicalServices/"]], "gap": "这里很难靠‘便宜’获客，核心是二诊速度、专家/病例量、病理影像复核、先进治疗可及性，以及回国后的continuity of care。"}, "康复 / 术后强化康复": {"global": [["欧洲高端康复机构", "德国/瑞士", "长期住院式康复、运动医学和高端服务成熟", "https://www.swissmedic.ch/"], ["Apollo / 泰国国际医院", "印度/泰国", "把康复嵌入骨科、神经和术后国际患者流程", "https://www.apollohospitals.com/"]], "china": [["嘉会医疗 / 和睦家", "上海", "适合做术后康复+国际患者连续管理", "https://www.jiahui.com/"], ["上海六院及大型康复机构", "上海", "骨科和康复临床基础强，但独立国际品牌仍有限", "https://english.shanghai.gov.cn/en-IntlMedicalServices/"]], "gap": "患者长住上海的成本会吃掉部分价格优势，因此更值得研究‘短期强化康复+远程管理+海外合作康复中心’。"}, "国际专科会诊 / 第二诊疗意见": {"global": [["Mayo Clinic / Cleveland Clinic等", "美国", "第二诊疗意见、国际患者转诊和远程专家服务成熟", "https://www.mayoclinic.org/departments-centers/international"], ["Apollo International Patient Services", "印度", "远程预审→旅行规划→治疗→视频复诊形成闭环", "https://www.apollohospitals.com/campaigns/internationalpatientservices-chennai/"]], "china": [["和睦家 / 嘉会 / SIMC", "上海", "多语种、国际保险、专科转诊能力较成熟", "https://english.shanghai.gov.cn/en-IntlMedicalServices/"], ["上海顶级公立医院国际部", "上海", "九院、瑞金、华山、仁济、六院等已具国际医疗入口", "https://english.shanghai.gov.cn/en-IntlMedicalServices/"]], "gap": "二诊可能不是高收入业务，但可以成为医疗出口漏斗入口：先筛选，再把真正高价值病例转化为来沪治疗。"}};
-const DATA = [{"name": "单颗种植牙", "cluster": "医疗旅游", "overseas": "US benchmark", "overseas_low": 2134, "overseas_high": 7429, "china_rmb_low": 2800, "china_rmb_high": 12000, "stay": "2次就诊；最终修复常跨数月", "standardization": 5, "followup": 3, "regulatory": 2, "travel_fit": 4, "acquisition": 3, "ticket": 2, "confidence": "高", "note": "美国单颗种植体平均约$2,143，但牙冠另计约$488–$3,254；上海/中国端价格因品牌、国际部和是否植骨差异很大。国家医保局对公立医院常规单颗种植的医疗服务费原则上调控至≤¥4,500，种植体集采¥548–1,855、牙冠竞价¥100–656。", "sources": [["CareCredit 2025：美国单颗种植牙与牙冠价格", "https://www.carecredit.com/well-u/health-wellness/dental-implants-cost-dental-implants-financing/"], ["国家医保局：口腔种植价格治理", "https://www.nhsa.gov.cn/art/2024/1/12/art_109_11954.html"]], "gap_mid": 4.6, "screen_score": 123.0, "china_usd": "$394–$1,690", "overseas_usd": "$2,134–$7,429", "china_rmb": "¥2,800–¥12,000"}, {"name": "全口/半口种植重建", "cluster": "医疗旅游", "overseas": "US / international self-pay", "overseas_low": 15000, "overseas_high": 65000, "china_rmb_low": 35000, "china_rmb_high": 180000, "stay": "多阶段；通常需两次以上来华", "standardization": 4, "followup": 4, "regulatory": 2, "travel_fit": 3, "acquisition": 3, "ticket": 5, "confidence": "中", "note": "价差可能非常大，但病例设计、植骨、临时桥、种植体品牌会让口径失真。真正的壁垒不是低价，而是方案、英文病历、跨境随访和海外合作牙医。", "sources": [["CareCredit 2025：All-on-4平均约$15,176；3-on-6约$12,474", "https://www.carecredit.com/well-u/health-wellness/dental-implants-cost-dental-implants-financing/"], ["上海国际医疗市场参考（非官方价格源，需二次核验）", "https://fenglinchina.com/shanghai-hospital-guide-2025/"]], "gap_mid": 2.6, "screen_score": 60.0, "china_usd": "$4,930–$25,352", "overseas_usd": "$15,000–$65,000", "china_rmb": "¥35,000–¥180,000"}, {"name": "屈光手术 LASIK / SMILE", "cluster": "医疗旅游", "overseas": "US benchmark", "overseas_low": 2300, "overseas_high": 5549, "china_rmb_low": 10000, "china_rmb_high": 30000, "stay": "3–7天较适配", "standardization": 5, "followup": 2, "regulatory": 2, "travel_fit": 5, "acquisition": 3, "ticket": 2, "confidence": "中高", "note": "美国标准LASIK双眼平均约$2,981；上海公开市场常见双眼半飞秒/全飞秒约¥10,000–30,000。短周期、高标准化、结果清晰，是医疗旅游较自然的项目。", "sources": [["CareCredit 2025：LASIK双眼价格", "https://www.carecredit.com/well-u/health-wellness/lasik-eye-surgery-cost-lasik-financing/"], ["上海市场价格参考（需以医院实际报价为准）", "https://www.mp17.com/sq/7174.html"]], "gap_mid": 1.4, "screen_score": 82.0, "china_usd": "$1,408–$4,225", "overseas_usd": "$2,300–$5,549", "china_rmb": "¥10,000–¥30,000"}, {"name": "白内障 / 高端人工晶体", "cluster": "医疗旅游", "overseas": "US self-pay benchmark", "overseas_low": 4401, "overseas_high": 11730, "china_rmb_low": 5800, "china_rmb_high": 25000, "stay": "约5–10天；双眼可能分期", "standardization": 5, "followup": 3, "regulatory": 2, "travel_fit": 4, "acquisition": 3, "ticket": 3, "confidence": "中", "note": "美国单眼白内障单焦点/散光晶体约$4,401/$5,455，晶体置换可更高。上海公开价格参考显示基础单眼手术约¥5,800–12,000，多焦点晶体可至¥15,000–25,000。", "sources": [["CareCredit：美国白内障手术平均成本", "https://www.carecredit.com/lasik/costs/"], ["上海眼科公开价格参考（第三方汇总）", "https://www.15ms.com/hospital/8608/"]], "gap_mid": 3.7, "screen_score": 107.0, "china_usd": "$817–$3,521", "overseas_usd": "$4,401–$11,730", "china_rmb": "¥5,800–¥25,000"}, {"name": "全身MRI + 高端体检", "cluster": "医疗旅游", "overseas": "US premium screening benchmark", "overseas_low": 1199, "overseas_high": 4999, "china_rmb_low": 5000, "china_rmb_high": 20000, "stay": "1–3天", "standardization": 5, "followup": 1, "regulatory": 1, "travel_fit": 5, "acquisition": 2, "ticket": 2, "confidence": "中低", "note": "美国Prenuvo全身MRI单项约$2,499，会员/增强套餐更高。中国端‘全身MRI+体检’缺乏统一标准套餐，本版采用上海高端体检/影像的研究区间，必须进一步逐家核价。优势在于一次性、多专科、快速出报告。", "sources": [["Prenuvo：Whole Body Scan $2,499；套餐更高", "https://www.prenuvo.com/what-we-offer"]], "gap_mid": 1.8, "screen_score": 108.0, "china_usd": "$704–$2,817", "overseas_usd": "$1,199–$4,999", "china_rmb": "¥5,000–¥20,000"}, {"name": "面部整形 / Facelift", "cluster": "医疗旅游", "overseas": "US surgeon-fee benchmark", "overseas_low": 12000, "overseas_high": 19000, "china_rmb_low": 30000, "china_rmb_high": 100000, "stay": "7–14天以上", "standardization": 3, "followup": 3, "regulatory": 3, "travel_fit": 4, "acquisition": 5, "ticket": 4, "confidence": "中低", "note": "美国ASPS 2024外科医生费用区间约$12k–19k，且不含麻醉/设施等全部费用。中国端价格高度依赖医生、机构和术式；上海2026已调整美容整形类医疗服务价格项目，但市场价需按机构核验。强竞争来自韩国、泰国、土耳其等。", "sources": [["ASPS 2024 surgeon fee ranges", "https://www.plasticsurgery.org/documents/news/statistics/2024/cosmetic-procedures-average-cost-2024.pdf"], ["上海市：美容整形类医疗服务价格项目调整", "https://www.shanghai.gov.cn/gwk/search/content/064a430eac884a3d803f2fd395ce8e79"]], "gap_mid": 1.7, "screen_score": 34.0, "china_usd": "$4,225–$14,085", "overseas_usd": "$12,000–$19,000", "china_rmb": "¥30,000–¥100,000"}, {"name": "TMS / rTMS 神经调控", "cluster": "医疗旅游 + 技术出海", "overseas": "US course benchmark (indicative)", "overseas_low": 6000, "overseas_high": 15000, "china_rmb_low": 8000, "china_rmb_high": 30000, "stay": "传统疗程常4–6周；加速疗程更适合旅行", "standardization": 4, "followup": 3, "regulatory": 4, "travel_fit": 2, "acquisition": 5, "ticket": 3, "confidence": "低", "note": "这是最需要二次研究的项目之一。TMS成熟用途主要是治疗而非独立诊断。传统疗程长，不天然适合医疗旅游；若是有证据支持、合规的加速疗程，则旅行适配度会上升。真正长期机会可能是设备+protocol+培训+海外诊所，而不只是患者来华。", "sources": [["FDA：rTMS监管与适应证框架", "https://www.fda.gov/medical-devices/guidance-documents-medical-devices-and-radiation-emitting-products/repetitive-transcranial-magnetic-stimulation-rtms-systems-class-ii-special-controls-guidance"]], "gap_mid": 3.9, "screen_score": 56.0, "china_usd": "$1,127–$4,225", "overseas_usd": "$6,000–$15,000", "china_rmb": "¥8,000–¥30,000"}, {"name": "全髋关节置换", "cluster": "医疗旅游", "overseas": "US Medicare-approved benchmark", "overseas_low": 10776, "overseas_high": 30000, "china_rmb_low": 35000, "china_rmb_high": 90000, "stay": "2–4周 + 康复", "standardization": 4, "followup": 5, "regulatory": 4, "travel_fit": 2, "acquisition": 4, "ticket": 5, "confidence": "中低", "note": "美国Medicare门诊中心该术式总批准金额约$10,776，不等同于商业自费全价。上海国际医疗中心公开参考中总髋置换手术费约$4,893，但住院、假体、麻醉、检查、康复可能另计，因此不能直接视为全包价。", "sources": [["Medicare：Total Hip Arthroplasty cost lookup", "https://www.medicare.gov/procedure-price-lookup/cost/27130/"], ["Shanghai International Medical Center 价格参考页", "https://drzhaosh.com/"]], "gap_mid": 2.3, "screen_score": 18.0, "china_usd": "$4,930–$12,676", "overseas_usd": "$10,776–$30,000", "china_rmb": "¥35,000–¥90,000"}, {"name": "睡眠医学 / PSG + 专科评估", "cluster": "医疗旅游 / 远程延伸", "overseas": "US self-pay broad benchmark", "overseas_low": 800, "overseas_high": 5000, "china_rmb_low": 350, "china_rmb_high": 5000, "stay": "1–3天", "standardization": 4, "followup": 2, "regulatory": 2, "travel_fit": 4, "acquisition": 3, "ticket": 1, "confidence": "低", "note": "上海公立医院价目中睡眠呼吸监测本体可以非常低，但国际患者实际套餐会包括门诊、检查、翻译、医生解读及其他检测，不能拿单项目收费直接与美国全包价比较。更可能作为高端体检/神经精神项目的附加模块。", "sources": [["上海新华医院物价公示：睡眠呼吸监测费", "https://www.xinhuamed.com.cn/med/wujia.html"]], "gap_mid": 7.7, "screen_score": 127, "china_usd": "$49–$704", "overseas_usd": "$800–$5,000", "china_rmb": "¥350–¥5,000"}, {"name": "肿瘤二诊 + 精准检查", "cluster": "医疗旅游 / 远程二诊", "overseas": "US premium self-pay varies widely", "overseas_low": 3000, "overseas_high": 20000, "china_rmb_low": 8000, "china_rmb_high": 50000, "stay": "3–10天；治疗则显著更长", "standardization": 3, "followup": 4, "regulatory": 4, "travel_fit": 3, "acquisition": 5, "ticket": 4, "confidence": "低", "note": "不适合只靠价格套利。真正价值可能来自大型医院病例量、多学科会诊、影像/病理复核、特定先进治疗可及性。不同癌种和治疗阶段价格不可直接横比，因此这里仅用于矩阵占位。", "sources": [["上海国际医疗服务政策与试点方向", "https://english.shanghai.gov.cn/en-Latest-WhatsNew/20260305/64f641c0e82b408b8ba64c6cc276550e.html"]], "gap_mid": 2.8, "screen_score": 29.0, "china_usd": "$1,127–$7,042", "overseas_usd": "$3,000–$20,000", "china_rmb": "¥8,000–¥50,000"}, {"name": "康复 / 术后强化康复", "cluster": "医疗旅游 / 服务出海", "overseas": "US private rehab varies widely", "overseas_low": 4000, "overseas_high": 20000, "china_rmb_low": 10000, "china_rmb_high": 50000, "stay": "2–6周", "standardization": 3, "followup": 3, "regulatory": 2, "travel_fit": 2, "acquisition": 4, "ticket": 3, "confidence": "低", "note": "疗程长削弱了‘飞来上海’的经济性，但可与骨科、神经科手术打包。更有扩张性的模式可能是康复protocol、远程管理和海外合作中心。", "sources": [["上海国际医疗服务政策方向", "https://english.shanghai.gov.cn/en-Bulletin/20250530/3217070bfa514ba1b1b9dfb206680ccb.html"]], "gap_mid": 2.8, "screen_score": 45.0, "china_usd": "$1,408–$7,042", "overseas_usd": "$4,000–$20,000", "china_rmb": "¥10,000–¥50,000"}, {"name": "国际专科会诊 / 第二诊疗意见", "cluster": "远程医疗服务出口", "overseas": "US specialist / concierge benchmark varies", "overseas_low": 500, "overseas_high": 5000, "china_rmb_low": 2000, "china_rmb_high": 12000, "stay": "无需来华或1–2天", "standardization": 4, "followup": 1, "regulatory": 3, "travel_fit": 5, "acquisition": 4, "ticket": 1, "confidence": "低", "note": "不是典型‘患者来华’，但可能是获客入口：先远程二诊，再筛出真正需要来沪的患者。对肿瘤、复杂口腔、骨科、神经疾病尤其有价值。", "sources": [["上海国际医疗政策：多语种、保险、国际患者服务", "https://english.shanghai.gov.cn/en-Bulletin/20250530/3217070bfa514ba1b1b9dfb206680ccb.html"]], "gap_mid": 2.8, "screen_score": 92.0, "china_usd": "$282–$1,690", "overseas_usd": "$500–$5,000", "china_rmb": "¥2,000–¥12,000"}];
-let rows=[...DATA], sortKey="gap_mid", asc=false;
-const tbody=document.querySelector("#matrix tbody");
-function confClass(c){return c==="高"||c==="中高"?"conf-high":c==="中"||c==="中低"?"conf-mid":"conf-low"}
-function render(){
-  const q=document.querySelector("#search").value.trim().toLowerCase();
-  const cl=document.querySelector("#cluster").value, cf=document.querySelector("#confidence").value;
-  let view=rows.filter(d=>(!q||(d.name+d.cluster+d.note).toLowerCase().includes(q))&&(!cl||d.cluster===cl)&&(!cf||d.confidence===cf));
-  view.sort((a,b)=>{let x=a[sortKey],y=b[sortKey]; if(typeof x==="string"){x=x.localeCompare(y,"zh");return asc?x:-x} return asc?(x-y):(y-x)});
-  tbody.innerHTML="";
-  view.forEach((d,i)=>{
-    const tr=document.createElement("tr"); tr.className="mainrow";
-    tr.innerHTML=`<td class="name">${d.name}</td><td><span class="pill">${d.cluster}</span></td><td>${d.overseas_usd}<br><span class="small">${d.overseas}</span></td><td>${d.china_rmb}<br><span class="small">${d.china_usd}</span></td><td class="score">${d.gap_mid}×</td><td>${d.stay}</td><td>${d.standardization}/5</td><td>${d.travel_fit}/5</td><td>${d.followup}/5</td><td>${d.regulatory}/5</td><td>${d.acquisition}/5</td><td class="${confClass(d.confidence)}">${d.confidence}</td>`;
-    const det=document.createElement("tr"); det.className="details";
-    const src=d.sources.map(s=>`<a href="${s[1]}" target="_blank" rel="noopener">${s[0]}</a>`).join(" · ");
-    const comp=COMPETITORS[d.name];
-    let compHtml="";
-    if(comp){
-      const gl=comp.global.map(x=>`<li><b>${x[0]}</b>（${x[1]}）：${x[2]} <a href="${x[3]}" target="_blank" rel="noopener">来源</a></li>`).join("");
-      const cn=comp.china.map(x=>`<li><b>${x[0]}</b>（${x[1]}）：${x[2]} <a href="${x[3]}" target="_blank" rel="noopener">来源</a></li>`).join("");
-      const cm=COMMERCIAL[d.name];
-      let commercialHtml="";
-      if(cm){
-        commercialHtml=`<div style="margin-top:12px;padding:12px;background:#f5f8ff;border-radius:10px">
-          <b>国际商业化结构：</b> ${cm.pattern}<br>
-          <span class="small">国内供给 ${cm.supply} · 国际品牌 ${cm.brand} · 海外获客 ${cm.acq} · 跨境随访 ${cm.follow} · 套餐化 ${cm.pack} · 技术出海 ${cm.tech}</span>
-          <div style="margin-top:6px">${cm.why}</div>
-        </div>`;
-      }
-      compHtml=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:12px">
-        <div><b>海外竞争者 / 目的地</b><ul style="margin:6px 0 0;padding-left:18px">${gl}</ul></div>
-        <div><b>中国国内竞争者 / 现有玩家</b><ul style="margin:6px 0 0;padding-left:18px">${cn}</ul></div>
-      </div><div style="margin-top:10px;padding:10px 12px;background:#fff7e8;border-radius:10px"><b>竞争缺口：</b>${comp.gap}</div>${commercialHtml}`;
-    }
-    det.innerHTML=`<td colspan="12"><b>备注：</b>${d.note}<br><b>价格/政策来源：</b>${src}${compHtml}</td>`;
-    tr.onclick=()=>det.classList.toggle("show");
-    tbody.appendChild(tr);tbody.appendChild(det);
-  });
-  drawBar(view); drawScatter(view);
-  document.querySelector("#kpiCount").textContent=DATA.length;
-  document.querySelector("#kpiGap").textContent=DATA.filter(d=>d.gap_mid>=2).length;
-  document.querySelector("#kpiTravel").textContent=DATA.filter(d=>d.travel_fit>=4).length;
-  document.querySelector("#kpiConf").textContent=DATA.filter(d=>["高","中高"].includes(d.confidence)).length;
-}
-document.querySelectorAll("th[data-k]").forEach(th=>th.onclick=()=>{const k=th.dataset.k;if(sortKey===k)asc=!asc;else{sortKey=k;asc=false}render()});
-["search","cluster","confidence"].forEach(id=>document.querySelector("#"+id).addEventListener("input",render));
-document.querySelector("#reset").onclick=()=>{document.querySelector("#search").value="";document.querySelector("#cluster").value="";document.querySelector("#confidence").value="";render()};
+const P={"dental": {"icon": "🦷", "title": "牙科 / 种植牙", "mode": "医疗旅游", "summary": "高自费价格、高标准化；真正竞争点在跨境复诊、信任与获客。", "home": "美国单颗种植+牙冠约 $2,100–7,400；全口重建更高。", "competitor": "土耳其单颗种植+牙冠公开市场常见约 $650–1,400；All-on-4 单颌约 $3,100–6,900。", "shanghai": "上海/中国国际患者实际成交价需逐机构核价；底层成本受集采与价格治理影响较低。", "allin": "若需两次来华，机票和二次住宿会显著削弱价格优势。", "global": [["Dental Centre Turkey", "土耳其", "全包式牙科旅游：植牙、修复、酒店/接送、英文获客"], ["Dental Departures", "跨境平台", "诊所发现、价格比较、预约与导流"]], "china": [["上海九院", "上海", "复杂口腔、颌面及修复能力强，已进入国际医疗服务体系"], ["大型连锁口腔机构", "全国", "国内自费市场标准化与运营成熟，国际品牌相对弱"]], "commercial": {"临床供给": "强", "国际品牌": "弱", "海外获客": "弱", "跨境随访": "弱", "套餐化": "中", "技术出海": "中"}, "entry": "不一定需要比土耳其更便宜。更现实的定位是：相近价格带下，提供更强的大医院专家、复杂病例处理、透明方案与海外合作牙医网络。"}, "ophthalmology": {"icon": "👁", "title": "眼科 / LASIK·SMILE·白内障", "mode": "医疗旅游", "summary": "短疗程、高标准化，中国已有国际化玩家，是较成熟的一类。", "home": "美国 LASIK 双眼约 $2,300–5,500；白内障单眼可约 $4,400 起。", "competitor": "韩国、泰国、土耳其均有成熟短期手术型医疗旅游产品。", "shanghai": "上海常见屈光手术约 ¥10,000–30,000；白内障/高端晶体需按术式核价。", "allin": "通常只需短期停留，因此旅行成本对总价影响较小。", "global": [["Bumrungrad Eye Center", "泰国", "国际患者流程成熟，眼科手术与旅行服务结合"], ["韩国大型眼科中心", "韩国", "短疗程、消费医疗式获客、筛查与复查流程化"]], "china": [["EuroEyes 德视佳", "上海/全国", "欧洲连锁眼科体系，具有天然国际品牌协同"], ["爱尔眼科", "全国/全球", "中国大型眼科集团，拥有海外网络"]], "commercial": {"临床供给": "强", "国际品牌": "中", "海外获客": "中", "跨境随访": "中", "套餐化": "中", "技术出海": "强"}, "entry": "机会更像把现有临床与集团能力转成‘上海眼科目的地产品’，强化来源国获客、英文套餐和跨境复查。"}, "checkup": {"icon": "🩻", "title": "高端体检 / 全身 MRI", "mode": "医疗旅游", "summary": "中国设备和医生强，但产品化、英文报告和全球品牌仍不足。", "home": "Prenuvo 全身 MRI 公开价格约 $2,499，增强套餐更高。", "competitor": "日本、泰国、新加坡在‘一日式体检 + 国际患者体验’上更成熟。", "shanghai": "上海国际机构与高端体检价格差异大，需逐家建立可比套餐。", "allin": "1–2天即可完成，住宿与机票容易控制，是旅行适配度很高的类型。", "global": [["Prenuvo", "美国/加拿大", "把全身 MRI 打包成消费者易理解的标准产品"], ["Bumrungrad / 日本体检中心", "泰国/日本", "一日式体检、多语种、企业与国际患者流程成熟"]], "china": [["嘉会医疗", "上海", "国际化综合医院，可承接体检→专科转诊"], ["上海国际医学中心等", "上海", "多语种、高端体检与国际患者服务"], ["MedBridge Shanghai 等", "上海", "已对海外患者销售体检协调服务"]], "commercial": {"临床供给": "强", "国际品牌": "弱", "海外获客": "弱", "跨境随访": "中", "套餐化": "中", "技术出海": "强"}, "entry": "最值得做的是把复杂资源压缩成简单产品：1–2天完成、次日英文报告、异常结果直接转专家。"}, "tms": {"icon": "🧠", "title": "TMS / 神经调控", "mode": "医疗旅游 + 技术出海", "summary": "单纯医疗旅游受疗程限制，但设备+protocol+培训的出海潜力更大。", "home": "美国传统 TMS 疗程公开市场常在数千到上万美元量级。", "competitor": "BrainsWay、NeuroStar、MagVenture、Magstim 等已形成设备与临床网络。", "shanghai": "中国端治疗成本较低，但跨机构口径差异大；价格数据仍需专门核验。", "allin": "传统疗程 4–6 周，旅行成本高；加速疗程若合规成熟，才真正改变医疗旅游逻辑。", "global": [["BrainsWay", "全球", "Deep TMS + 获批适应证 + provider 网络 + 加速 protocol"], ["NeuroStar", "美国", "设备、医生网络与患者获客平台一体化"]], "china": [["深圳英智科技 YINGCHI", "深圳", "TMS 设备厂商，与 BrainsWay 合作并布局海外经销"], ["上海市精神卫生中心 / 北大六院等", "中国主要城市", "临床应用节点强，但国际患者产品化有限"]], "commercial": {"临床供给": "中强", "国际品牌": "弱", "海外获客": "弱", "跨境随访": "弱", "套餐化": "弱", "技术出海": "强"}, "entry": "这类项目更像‘中国医疗技术出口’。上海可做临床验证、培训与示范中心，设备与 protocol 才是规模化抓手。"}, "oncology": {"icon": "🎗", "title": "肿瘤二诊 / 精准检查", "mode": "远程二诊 + 来华治疗", "summary": "不是价格套利型项目，真正卖点是专家、病例量、先进治疗与速度。", "home": "美国高端二诊、病理复核、精准检测与治疗费用跨度极大。", "competitor": "新加坡、印度等已把国际患者预审、签证、住宿、治疗和随访做成完整链条。", "shanghai": "上海拥有质子重离子、顶级三甲与国际医疗机构，但跨境产品化仍不足。", "allin": "若只做二诊，旅行成本可以很低；进入治疗后，住宿和长期随访成为核心成本。", "global": [["Apollo Cancer Centres / Apollo Proton", "印度", "病历预审、签证、住宿、机场、翻译、视频随访"], ["新加坡大型肿瘤中心", "新加坡", "英文医疗、保险、区域转诊与高端国际患者市场成熟"]], "china": [["上海质子重离子中心", "上海", "先进放疗能力与高病例量"], ["嘉会 / 和睦家 / 国际癌症中心等", "上海", "国际患者服务、保险和多专科协调较成熟"]], "commercial": {"临床供给": "强", "国际品牌": "中", "海外获客": "弱", "跨境随访": "弱", "套餐化": "弱", "技术出海": "强"}, "entry": "最适合的入口可能不是‘来中国治癌’，而是快速远程二诊与病理/影像复核，再把有差异化价值的病例转化为来沪治疗。"}};
 
-function setup(c){const r=c.getBoundingClientRect(),d=devicePixelRatio||1;c.width=r.width*d;c.height=390*d;const x=c.getContext("2d");x.scale(d,d);return [x,r.width,390]}
-function drawBar(view){
- const c=document.querySelector("#bar"),[x,w,h]=setup(c); x.clearRect(0,0,w,h);
- const d=[...view].sort((a,b)=>b.gap_mid-a.gap_mid).slice(0,12), ml=155,mr=25,mt=15,mb=20, plot=w-ml-mr, max=Math.max(5,...d.map(z=>z.gap_mid));
- x.font="12px sans-serif";
- d.forEach((z,i)=>{let y=mt+i*((h-mt-mb)/Math.max(d.length,1)), bh=Math.min(22,(h-mt-mb)/Math.max(d.length,1)-5),bw=plot*z.gap_mid/max;
-   x.fillStyle="#2459ff";x.fillRect(ml,y,bw,bh);x.fillStyle="#303846";x.textAlign="right";x.fillText(z.name,ml-8,y+bh*.72);x.textAlign="left";x.fillText(z.gap_mid+"×",ml+bw+6,y+bh*.72)
- });
+function show(id){
+ document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ window.scrollTo({top:0,behavior:'instant'});
 }
-function drawScatter(view){
- const c=document.querySelector("#scatter"),[x,w,h]=setup(c);x.clearRect(0,0,w,h);
- const ml=45,mr=20,mt=20,mb=35, pw=w-ml-mr, ph=h-mt-mb, maxX=Math.max(5,...view.map(z=>z.gap_mid));
- x.strokeStyle="#dfe4ea";x.beginPath();x.moveTo(ml,mt);x.lineTo(ml,h-mb);x.lineTo(w-mr,h-mb);x.stroke();
- x.fillStyle="#677384";x.font="11px sans-serif";x.fillText("标准化 ↑",6,18);x.fillText("价格差 →",w-70,h-8);
- [1,2,3,4,5].forEach(v=>{let yy=h-mb-(v-1)/4*ph;x.fillText(v,25,yy+4);x.strokeStyle="#eef1f4";x.beginPath();x.moveTo(ml,yy);x.lineTo(w-mr,yy);x.stroke()});
- view.forEach(z=>{let xx=ml+(z.gap_mid/maxX)*pw, yy=h-mb-((z.standardization-1)/4)*ph, r=5+z.ticket*2;
-   x.globalAlpha=.78;x.fillStyle="#2459ff";x.beginPath();x.arc(xx,yy,r,0,Math.PI*2);x.fill();x.globalAlpha=1;x.fillStyle="#303846";x.font="10px sans-serif";x.fillText(z.name,xx+r+3,yy+3)
- });
+
+function go(route){
+ if(route==='home'){location.hash='';show('home');return}
+ if(P[route]){location.hash=route;renderDetail(route);show('detail');return}
+ location.hash=route;show(route);
 }
-window.addEventListener("resize",()=>render());
-render();
+
+function initCards(){
+ const el=document.getElementById('projectCards');
+ el.innerHTML=Object.entries(P).map(([k,p])=>`<div class="card" onclick="go('${k}')"><div class="icon">${p.icon}</div><span class="pill">${p.mode}</span><h3>${p.title}</h3><p>${p.summary}</p><a href="#${k}" onclick="event.stopPropagation()">进入详细分析 →</a></div>`).join('');
+}
+
+function renderDetail(k){
+ const p=P[k], c=p.commercial;
+ const globalRows=p.global.map(x=>`<tr><td><b>${x[0]}</b></td><td>${x[1]}</td><td>${x[2]}</td></tr>`).join('');
+ const chinaRows=p.china.map(x=>`<tr><td><b>${x[0]}</b></td><td>${x[1]}</td><td>${x[2]}</td></tr>`).join('');
+ const comRows=Object.entries(c).map(([a,b])=>`<tr><td>${a}</td><td><span class="pill">${b}</span></td></tr>`).join('');
+ document.getElementById('detailContent').innerHTML=`
+ <div class="hero"><span class="badge">${p.mode}</span><h1>${p.icon} ${p.title}</h1><p>${p.summary}</p></div>
+ <div class="kpis">
+   <div class="kpi"><div class="small">国内供给</div><div class="v">${c["临床供给"]}</div></div>
+   <div class="kpi"><div class="small">国际品牌</div><div class="v">${c["国际品牌"]}</div></div>
+   <div class="kpi"><div class="small">海外获客</div><div class="v">${c["海外获客"]}</div></div>
+   <div class="kpi"><div class="small">技术出海</div><div class="v">${c["技术出海"]}</div></div>
+ </div>
+ <div class="panel"><h2>1. 价格结构</h2><div class="content"><table>
+ <tr><th>来源市场</th><td>${p.home}</td></tr>
+ <tr><th>主要竞争目的地</th><td>${p.competitor}</td></tr>
+ <tr><th>中国 / 上海</th><td>${p.shanghai}</td></tr>
+ <tr><th>All-in 成本提醒</th><td>${p.allin}</td></tr>
+ </table><div class="callout"><b>核心：</b>不能只比较上海与美国。真正决定竞争力的是“来源市场 → 竞争目的地 → 上海 → All-in Cost”。</div></div></div>
+ <div class="two">
+ <div class="panel"><h2>2. 海外竞争者</h2><div class="content"><table><tr><th>玩家</th><th>地区</th><th>模式</th></tr>${globalRows}</table></div></div>
+ <div class="panel"><h2>3. 中国国内玩家</h2><div class="content"><table><tr><th>玩家</th><th>地区</th><th>位置</th></tr>${chinaRows}</table></div></div>
+ </div>
+ <div class="panel"><h2>4. 国际商业化缺口</h2><div class="content"><table>${comRows}</table></div></div>
+ <div class="panel"><h2>5. 上海进入逻辑</h2><div class="content"><div class="callout blue">${p.entry}</div></div></div>`;
+}
+
+function renderPricing(){
+ const rows=Object.values(P).map(p=>`<tr><td><b>${p.title}</b></td><td>${p.home}</td><td>${p.competitor}</td><td>${p.shanghai}</td><td>${p.allin}</td></tr>`).join('');
+ document.getElementById('pricingTable').innerHTML=`<h2>项目价格结构</h2><div class="content" style="overflow:auto"><table style="min-width:1100px"><tr><th>项目</th><th>来源市场</th><th>竞争目的地</th><th>上海</th><th>All-in 提醒</th></tr>${rows}</table></div>`;
+}
+
+function renderCompetition(){
+ document.getElementById('competitionContent').innerHTML=Object.values(P).map(p=>`
+ <div class="panel"><h2>${p.icon} ${p.title}</h2><div class="content"><div class="two">
+ <div><b>海外竞争者</b><ul>${p.global.map(x=>`<li><b>${x[0]}</b>（${x[1]}）：${x[2]}</li>`).join('')}</ul></div>
+ <div><b>中国国内玩家</b><ul>${p.china.map(x=>`<li><b>${x[0]}</b>（${x[1]}）：${x[2]}</li>`).join('')}</ul></div>
+ </div></div></div>`).join('');
+}
+
+function renderCommercial(){
+ const keys=["临床供给","国际品牌","海外获客","跨境随访","套餐化","技术出海"];
+ const rows=Object.values(P).map(p=>`<tr><td><b>${p.title}</b></td>${keys.map(k=>`<td><span class="pill">${p.commercial[k]}</span></td>`).join('')}<td>${p.entry}</td></tr>`).join('');
+ document.getElementById('commercialContent').innerHTML=`<h2>商业化结构总览</h2><div class="content" style="overflow:auto"><table style="min-width:1000px"><tr><th>项目</th>${keys.map(k=>`<th>${k}</th>`).join('')}<th>进入逻辑</th></tr>${rows}</table></div>`;
+}
+
+function route(){
+ const h=location.hash.replace('#','');
+ if(!h){show('home');return}
+ if(P[h]){renderDetail(h);show('detail');return}
+ if(['pricing','competition','commercial'].includes(h)){show(h);return}
+ show('home');
+}
+
+initCards();renderPricing();renderCompetition();renderCommercial();
+window.addEventListener('hashchange',route);route();
 </script>
-</body>
-</html>
+</body></html>
